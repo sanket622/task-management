@@ -1,1 +1,23 @@
 /* You can add global styles to this file, and also import other style files */
+nav {
+  background: linear-gradient(90deg, #4a90e2, #0056b3);
+}
+.navbar-nav .nav-link {
+  color: #ffffff; /* White text color for links */
+}
+
+.navbar-nav .nav-link:hover {
+  color: #ffcc00; /* Yellow color on hover */
+}
+
+.navbar-brand:hover {
+  color: #ffcc00; /* Yellow color on hover for brand */
+}
+
+.navbar-toggler {
+  border-color: #ffffff; /* White border for toggler */
+}
+
+.navbar-toggler-icon {
+  background-color: #ffffff; /* White color for toggler icon */
+}

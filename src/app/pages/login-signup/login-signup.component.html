@@ -1,0 +1,36 @@
+<div class="text-center p-3 bg-primary text-white rounded">
+  <h2>Login / Signup with Local Storage</h2>
+</div>
+<div class="container mt-5 d-flex justify-content-center" style="font-family: fantasy;">
+  <!-- REGISTER FORM -->
+  <form *ngIf="activeForm === 'register'" class="p-4 border rounded shadow bg-light" style="width: 100%; max-width: 500px;">
+    <h2 class="text-center mb-4">REGISTER</h2>
+    <div class="mb-3">
+      <input type="text" class="form-control" name="name" [(ngModel)]="registerObj.name" placeholder="Name">
+    </div>
+    <div class="mb-3">
+      <input type="email" class="form-control" name="email" [(ngModel)]="registerObj.email" placeholder="Email">
+    </div>
+    <div class="mb-3">
+      <input type="password" class="form-control" name="password" [(ngModel)]="registerObj.password" placeholder="Password">
+    </div>
+    <button type="submit" class="btn btn-primary w-100" (click)="registerForm()">Register</button>
+    <p (click)="toggleForm('login')" class="text-center mt-3">
+      Already have an account? <span class="text-primary" style="cursor: pointer;">LOGIN</span>
+    </p>
+  </form>
+  <!-- LOGIN FORM -->
+  <form *ngIf="activeForm === 'login'" class="p-4 border rounded shadow bg-light" style="width: 100%; max-width: 500px;">
+    <h2 class="text-center mb-4">LOGIN</h2>    
+    <div class="mb-3">
+      <input type="email" class="form-control" name="email" [(ngModel)]="loginObj.email" placeholder="Email">
+    </div>
+    <div class="mb-3">
+      <input type="password" class="form-control" name="password" [(ngModel)]="loginObj.password" placeholder="Password">
+    </div>
+    <button type="submit" class="btn btn-primary w-100" (click)="loginForm()">Login</button>
+    <p (click)="toggleForm('register')" class="text-center mt-3">
+      Don't have an account? <span class="text-primary" style="cursor: pointer;">REGISTER</span>
+    </p>
+  </form>
+</div>
