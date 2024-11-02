@@ -33,7 +33,6 @@ export class LoginSignupComponent {
     this._snackbar.open('User register successfully', 'close');
   }
   loginForm() {
-    debugger;
     const localusers = localStorage.getItem('users');
     if (localusers != null) {
       const users = JSON.parse(localusers);

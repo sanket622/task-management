@@ -1,1 +1,85 @@
-<p>dashboard works!</p>
+<nav class="navbar navbar-expand-lg" style="background-color: #4a90e2;">
+  <!-- Navbar content here -->
+</nav>
+
+<div class="container mt-4">
+  <h3 class="text-center">Task Dashboard</h3>
+
+  <!-- Task Summary -->
+  <div class="row text-center my-4">
+    <div class="col">
+      <h5>Pending</h5>
+      <p>{{ pendingCount }}</p>
+    </div>
+    <div class="col">
+      <h5>In Progress</h5>
+      <p>{{ inProgressCount }}</p>
+    </div>
+    <div class="col">
+      <h5>Completed</h5>
+      <p>{{ completedCount }}</p>
+    </div>
+  </div>
+
+  <!-- Task Form -->
+  <div class="card mt-3">
+    <div class="card-body">
+      <h5 class="card-title">{{ isEditMode ? 'Edit Task' : 'Add New Task' }}</h5>
+      <form (ngSubmit)="saveTask()">
+        <div class="form-group">
+          <label for="title">Title</label>
+          <input [(ngModel)]="newTask.title" name="title" class="form-control" required />
+        </div>
+        <div class="form-group mt-2">
+          <label for="description">Description</label>
+          <textarea [(ngModel)]="newTask.description" name="description" class="form-control" rows="3"></textarea>
+        </div>
+        <div class="form-group mt-2">
+          <label for="status">Status</label>
+          <select [(ngModel)]="newTask.status" name="status" class="form-control">
+            <option value="Pending">Pending</option>
+            <option value="In Progress">In Progress</option>
+            <option value="Completed">Completed</option>
+          </select>
+        </div>
+        <div class="form-group mt-2">
+          <label for="dueDate">Due Date</label>
+          <input [(ngModel)]="newTask.dueDate" name="dueDate" class="form-control" type="date" required />
+        </div>
+        <button type="submit" class="btn btn-primary mt-3">
+          {{ isEditMode ? 'Save Changes' : 'Add Task' }}
+        </button>
+        <button type="button" class="btn btn-secondary mt-3 ms-2" *ngIf="isEditMode" (click)="resetTaskForm()">
+          Cancel
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Filter Tasks -->
+  <div class="d-flex mt-3 justify-content-between">
+    <h5>Filter by Status</h5>
+    <select [(ngModel)]="filterStatus" (change)="applyFilter()" class="form-select w-auto">
+      <option value="All">All</option>
+      <option value="Pending">Pending</option>
+      <option value="In Progress">In Progress</option>
+      <option value="Completed">Completed</option>
+    </select>
+  </div>
+
+  <!-- Task List -->
+  <div class="row mt-4">
+    <div *ngFor="let task of filteredTasks" class="col-md-4">
+      <div class="card mb-3">
+        <div class="card-body">
+          <h5 class="card-title">{{ task.title }}</h5>
+          <p class="card-text">{{ task.description }}</p>
+          <p><strong>Status:</strong> {{ task.status }}</p>
+          <p><strong>Due Date:</strong> {{ task.dueDate | date }}</p>
+          <button (click)="editTask(task)" class="btn btn-warning btn-sm">Edit</button>
+          <button (click)="deleteTask(task.id)" class="btn btn-danger btn-sm ms-2">Delete</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
