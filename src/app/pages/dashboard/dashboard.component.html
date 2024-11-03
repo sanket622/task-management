@@ -80,7 +80,7 @@
           <h5 class="card-title" [ngClass]="{'text-light': isDarkMode}">{{ task.title }}</h5>
           <p class="card-text" [ngClass]="{'text-light': isDarkMode}">{{ task.description }}</p>
           <p [ngClass]="{'text-light': isDarkMode}"><strong>Status:</strong> {{ task.status }}</p>
-          <p [ngClass]="{'text-light': isDarkMode}"><strong>Due Date:</strong> {{ task.dueDate | date }}</p>
+          <p [ngClass]="{'text-light': isDarkMode}"><strong>Due Date:</strong> {{ task.dueDate | customDate }}</p>
           <button (click)="editTask(task)" class="btn btn-warning btn-sm">Edit</button>
           <button (click)="deleteTask(task.id)" class="btn btn-danger btn-sm ms-2">Delete</button>
         </div>

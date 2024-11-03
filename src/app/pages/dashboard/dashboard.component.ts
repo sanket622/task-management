@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ConfirmDialogComponent } from '../../confirm-dialog/confirm-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
+import { CustomDatePipe } from '../../pipes/custom-date.pipe';
 
 interface Task {
   id: number;
@@ -15,7 +16,7 @@ interface Task {
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [FormsModule, CommonModule, ConfirmDialogComponent],
+  imports: [FormsModule, CommonModule, ConfirmDialogComponent, CustomDatePipe],
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css'],
 })
