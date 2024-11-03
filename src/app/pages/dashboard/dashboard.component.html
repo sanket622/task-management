@@ -1,4 +1,8 @@
-<nav class="navbar navbar-expand-lg" [ngClass]="{'dark-navbar': isDarkMode}" style="background-color: #4a90e2;">
+<nav
+  class="navbar navbar-expand-lg"
+  [ngClass]="{ 'dark-navbar': isDarkMode }"
+  style="background-color: #4a90e2"
+>
   <div class="container-fluid">
     <label>
       <input type="checkbox" (change)="toggleDarkMode($event)" />
@@ -7,84 +11,151 @@
   </div>
 </nav>
 
-<div class="container mt-4" [ngClass]="{'dark-container': isDarkMode}">
-  <h3 class="text-center" [ngClass]="{'text-light': isDarkMode}">Task Dashboard</h3>
+<div class="container mt-4" [ngClass]="{ 'dark-container': isDarkMode }">
+  <h3 class="text-center" [ngClass]="{ 'text-light': isDarkMode }">
+    Task Dashboard
+  </h3>
 
   <!-- Task Summary -->
   <div class="row text-center my-4">
-    <div class="col" [ngClass]="{'text-light': isDarkMode}">
+    <div class="col" [ngClass]="{ 'text-light': isDarkMode }">
       <h5>Pending</h5>
       <p>{{ pendingCount }}</p>
     </div>
-    <div class="col" [ngClass]="{'text-light': isDarkMode}">
+    <div class="col" [ngClass]="{ 'text-light': isDarkMode }">
       <h5>In Progress</h5>
       <p>{{ inProgressCount }}</p>
     </div>
-    <div class="col" [ngClass]="{'text-light': isDarkMode}">
+    <div class="col" [ngClass]="{ 'text-light': isDarkMode }">
       <h5>Completed</h5>
       <p>{{ completedCount }}</p>
     </div>
   </div>
 
   <!-- Task Form -->
-  <div class="card mt-3" [ngClass]="{'dark-card': isDarkMode}">
-    <div class="card-body">
-      <h5 class="card-title">{{ isEditMode ? 'Edit Task' : 'Add New Task' }}</h5>
+  <mat-card class="mt-3 full-width" [ngClass]="{ 'dark-card': isDarkMode }">
+    <mat-card-title>
+      {{ isEditMode ? "Edit Task" : "Add New Task" }}
+    </mat-card-title>
+    <mat-card-content>
       <form (ngSubmit)="saveTask()">
         <div class="form-group">
-          <label for="title" [ngClass]="{'text-light': isDarkMode}">Title</label>
-          <input [(ngModel)]="newTask.title" name="title" class="form-control" required />
+          <mat-form-field appearance="fill" class="full-width">
+            <mat-label [ngClass]="{ 'text-light': isDarkMode }"
+              >Title</mat-label
+            >
+            <input matInput [(ngModel)]="newTask.title" name="title" required />
+          </mat-form-field>
         </div>
         <div class="form-group mt-2">
-          <label for="description" [ngClass]="{'text-light': isDarkMode}">Description</label>
-          <textarea [(ngModel)]="newTask.description" name="description" class="form-control" rows="3"></textarea>
+          <mat-form-field appearance="fill" class="full-width">
+            <mat-label [ngClass]="{ 'text-light': isDarkMode }"
+              >Description</mat-label
+            >
+            <textarea
+              matInput
+              [(ngModel)]="newTask.description"
+              name="description"
+              rows="3"
+            ></textarea>
+          </mat-form-field>
         </div>
         <div class="form-group mt-2">
-          <label for="status" [ngClass]="{'text-light': isDarkMode}">Status</label>
-          <select [(ngModel)]="newTask.status" name="status" class="form-control">
-            <option value="Pending">Pending</option>
-            <option value="In Progress">In Progress</option>
-            <option value="Completed">Completed</option>
-          </select>
+          <mat-form-field appearance="fill" class="full-width">
+            <mat-label [ngClass]="{ 'text-light': isDarkMode }"
+              >Status</mat-label
+            >
+            <mat-select [(ngModel)]="newTask.status" name="status">
+              <mat-option value="Pending">Pending</mat-option>
+              <mat-option value="In Progress">In Progress</mat-option>
+              <mat-option value="Completed">Completed</mat-option>
+            </mat-select>
+          </mat-form-field>
         </div>
         <div class="form-group mt-2">
-          <label for="dueDate" [ngClass]="{'text-light': isDarkMode}">Due Date</label>
-          <input [(ngModel)]="newTask.dueDate" name="dueDate" class="form-control" type="date" required />
+          <mat-label for="dueDate" [ngClass]="{ 'text-light': isDarkMode }"
+            >Due Date</mat-label
+          >
+          <input
+            [(ngModel)]="newTask.dueDate"
+            name="dueDate"
+            class="form-control"
+            type="date"
+            required
+          />
         </div>
-        <button type="submit" class="btn btn-primary mt-3">
-          {{ isEditMode ? 'Save Changes' : 'Add Task' }}
+        <button mat-raised-button color="primary" type="submit" class="mt-3">
+          {{ isEditMode ? "Save Changes" : "Add Task" }}
         </button>
-        <button type="button" class="btn btn-secondary mt-3 ms-2" *ngIf="isEditMode" (click)="resetTaskForm()">
+        <button
+          mat-button
+          type="button"
+          class="mt-3 ms-2"
+          *ngIf="isEditMode"
+          (click)="resetTaskForm()"
+        >
           Cancel
         </button>
       </form>
-    </div>
-  </div>
+    </mat-card-content>
+  </mat-card>
 
-  <!-- Filter Tasks -->
   <div class="d-flex mt-3 justify-content-between">
-    <h5 [ngClass]="{'text-light': isDarkMode}">Filter by Status</h5>
-    <select [(ngModel)]="filterStatus" (change)="applyFilter()" class="form-select w-auto">
-      <option value="All">All</option>
-      <option value="Pending">Pending</option>
-      <option value="In Progress">In Progress</option>
-      <option value="Completed">Completed</option>
-    </select>
+    <h5 [ngClass]="{ 'text-light': isDarkMode }">Filter by Status</h5>
+    <mat-form-field appearance="fill" class="w-auto">
+      <mat-label>Status</mat-label>
+      <mat-select [(ngModel)]="filterStatus" (selectionChange)="applyFilter()">
+        <mat-option value="All">All</mat-option>
+        <mat-option value="Pending">Pending</mat-option>
+        <mat-option value="In Progress">In Progress</mat-option>
+        <mat-option value="Completed">Completed</mat-option>
+      </mat-select>
+    </mat-form-field>
   </div>
 
-  <!-- Task List -->
-  <div class="row mt-4">
-    <div *ngFor="let task of filteredTasks" class="col-md-4">
-      <div class="card mb-3" [ngClass]="{'dark-card': isDarkMode}">
-        <div class="card-body">
-          <h5 class="card-title" [ngClass]="{'text-light': isDarkMode}">{{ task.title }}</h5>
-          <p class="card-text" [ngClass]="{'text-light': isDarkMode}">{{ task.description }}</p>
-          <p [ngClass]="{'text-light': isDarkMode}"><strong>Status:</strong> {{ task.status }}</p>
-          <p [ngClass]="{'text-light': isDarkMode}"><strong>Due Date:</strong> {{ task.dueDate | customDate }}</p>
-          <button (click)="editTask(task)" class="btn btn-warning btn-sm">Edit</button>
-          <button (click)="deleteTask(task.id)" class="btn btn-danger btn-sm ms-2">Delete</button>
-        </div>
-      </div>
-    </div>
-  </div>
+  <!-- Angular Material Card Example -->
+  <mat-card class="mb-3">
+    <mat-card-title style="margin-bottom: 16px">Task List</mat-card-title>
+    <mat-card-content>
+      <table mat-table [dataSource]="filteredTasks" class="mat-elevation-z8">
+        <!-- Title Column -->
+        <ng-container matColumnDef="title">
+          <th mat-header-cell *matHeaderCellDef>Title</th>
+          <td mat-cell *matCellDef="let task">{{ task.title }}</td>
+        </ng-container>
+
+        <!-- Description Column -->
+        <ng-container matColumnDef="description">
+          <th mat-header-cell *matHeaderCellDef>Description</th>
+          <td mat-cell *matCellDef="let task">{{ task.description }}</td>
+        </ng-container>
+
+        <!-- Status Column -->
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef>Status</th>
+          <td mat-cell *matCellDef="let task">{{ task.status }}</td>
+        </ng-container>
+
+        <!-- Due Date Column -->
+        <ng-container matColumnDef="dueDate">
+          <th mat-header-cell *matHeaderCellDef>Due Date</th>
+          <td mat-cell *matCellDef="let task">
+            {{ task.dueDate | customDate }}
+          </td>
+        </ng-container>
+
+        <!-- Actions Column -->
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef>Actions</th>
+          <td mat-cell *matCellDef="let task">
+            <button mat-button (click)="editTask(task)">Edit</button>
+            <button mat-button (click)="deleteTask(task.id)">Delete</button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+    </mat-card-content>
+  </mat-card>
 </div>

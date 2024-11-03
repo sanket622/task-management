@@ -4,7 +4,12 @@ import { FormsModule } from '@angular/forms';
 import { ConfirmDialogComponent } from '../../confirm-dialog/confirm-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { CustomDatePipe } from '../../pipes/custom-date.pipe';
-
+import { MatCardModule } from '@angular/material/card';
+import { MatTableModule } from '@angular/material/table';
+import { MatSelectModule } from '@angular/material/select';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 interface Task {
   id: number;
   title: string;
@@ -16,11 +21,29 @@ interface Task {
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [FormsModule, CommonModule, ConfirmDialogComponent, CustomDatePipe],
+  imports: [
+    FormsModule,
+    CommonModule,
+    ConfirmDialogComponent,
+    CustomDatePipe,
+    MatCardModule,
+    MatTableModule,
+    MatSelectModule,
+    MatInputModule,
+    MatButtonModule,
+    MatDatepickerModule,
+  ],
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css'],
 })
 export class DashboardComponent implements OnInit {
+  displayedColumns: string[] = [
+    'title',
+    'description',
+    'status',
+    'dueDate',
+    'actions',
+  ];
   constructor(private dialog: MatDialog) {}
   tasks: Task[] = [];
   filteredTasks: Task[] = [];

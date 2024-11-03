@@ -35,3 +35,6 @@ body.dark-mode {
 .text-light {
   color: #ffffff !important;
 }
+.full-width {
+  width: 100%;
+}
