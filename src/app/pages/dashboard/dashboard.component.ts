@@ -9,7 +9,6 @@ import { MatTableModule } from '@angular/material/table';
 import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
-import { MatDatepickerModule } from '@angular/material/datepicker';
 interface Task {
   id: number;
   title: string;
@@ -31,7 +30,6 @@ interface Task {
     MatSelectModule,
     MatInputModule,
     MatButtonModule,
-    MatDatepickerModule,
   ],
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css'],
@@ -58,7 +56,6 @@ export class DashboardComponent implements OnInit {
   isEditMode: boolean = false;
   editingTaskId: number | null = null;
 
-  // Status counts
   pendingCount: number = 0;
   inProgressCount: number = 0;
   completedCount: number = 0;
@@ -68,7 +65,6 @@ export class DashboardComponent implements OnInit {
     this.updateStatusCounts();
   }
 
-  // Load tasks from local storage
   loadTasks() {
     const storedTasks = localStorage.getItem('tasks');
     this.tasks = storedTasks ? JSON.parse(storedTasks) : [];
@@ -76,7 +72,6 @@ export class DashboardComponent implements OnInit {
     this.updateStatusCounts();
   }
 
-  // Add a new task or update an existing task
   saveTask() {
     if (this.isEditMode && this.editingTaskId !== null) {
       // Update task
@@ -100,14 +95,12 @@ export class DashboardComponent implements OnInit {
     this.resetTaskForm();
   }
 
-  // Enable edit mode and populate form with the selected task's data
   editTask(task: Task) {
     this.newTask = { ...task };
     this.isEditMode = true;
     this.editingTaskId = task.id;
   }
 
-  // Delete a task
   deleteTask(taskId: number) {
     const dialogRef = this.dialog.open(ConfirmDialogComponent);
 
@@ -120,14 +113,12 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-  // Save tasks to local storage and update counts
   saveTasks() {
     localStorage.setItem('tasks', JSON.stringify(this.tasks));
     this.applyFilter();
     this.updateStatusCounts();
   }
 
-  // Reset task form
   resetTaskForm() {
     this.newTask = {
       id: 0,
@@ -140,7 +131,6 @@ export class DashboardComponent implements OnInit {
     this.editingTaskId = null;
   }
 
-  // Filter tasks by status
   applyFilter() {
     if (this.filterStatus === 'All') {
       this.filteredTasks = [...this.tasks];
@@ -152,7 +142,6 @@ export class DashboardComponent implements OnInit {
     this.updateStatusCounts();
   }
 
-  // Update counts for each task status
   updateStatusCounts() {
     this.pendingCount = this.tasks.filter(
       (task) => task.status === 'Pending'

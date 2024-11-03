@@ -11,12 +11,16 @@
   </div>
 </nav>
 
-<div class="container mt-4" [ngClass]="{ 'dark-container': isDarkMode }">
-  <h3 class="text-center" [ngClass]="{ 'text-light': isDarkMode }">
-    Task Dashboard
-  </h3>
+<mat-card class="mat-elevation-z4" [ngClass]="{ 'dark-container': isDarkMode }">
+  <mat-card-header>
+    <mat-card-title
+      class="text-center"
+      [ngClass]="{ 'text-light': isDarkMode }"
+    >
+      Task Dashboard
+    </mat-card-title>
+  </mat-card-header>
 
-  <!-- Task Summary -->
   <div class="row text-center my-4">
     <div class="col" [ngClass]="{ 'text-light': isDarkMode }">
       <h5>Pending</h5>
@@ -32,7 +36,6 @@
     </div>
   </div>
 
-  <!-- Task Form -->
   <mat-card class="mt-3 full-width" [ngClass]="{ 'dark-card': isDarkMode }">
     <mat-card-title>
       {{ isEditMode ? "Edit Task" : "Add New Task" }}
@@ -113,7 +116,6 @@
     </mat-form-field>
   </div>
 
-  <!-- Angular Material Card Example -->
   <mat-card class="mb-3">
     <mat-card-title style="margin-bottom: 16px">Task List</mat-card-title>
     <mat-card-content>
@@ -158,4 +160,4 @@
       </table>
     </mat-card-content>
   </mat-card>
-</div>
+</mat-card>
