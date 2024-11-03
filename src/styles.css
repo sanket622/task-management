@@ -21,3 +21,6 @@ nav {
 .navbar-toggler-icon {
   background-color: #ffffff; /* White color for toggler icon */
 }
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

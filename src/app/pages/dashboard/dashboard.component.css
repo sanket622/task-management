@@ -8,3 +8,30 @@
 .card-title {
   font-weight: bold;
 }
+/* styles.css */
+/* Dark mode for body */
+body.dark-mode {
+  background-color: #121212;
+  color: #ffffff;
+}
+
+/* Dark mode navbar and container */
+.dark-navbar {
+  background-color: #333333 !important;
+}
+
+.dark-container {
+  background-color: #1e1e1e;
+  color: #ffffff;
+}
+
+/* Dark mode card */
+.dark-card {
+  background-color: #2b2b2b;
+  color: #ffffff;
+}
+
+/* Dark mode text */
+.text-light {
+  color: #ffffff !important;
+}

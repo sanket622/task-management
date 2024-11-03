@@ -1,6 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { ConfirmDialogComponent } from '../../confirm-dialog/confirm-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 interface Task {
   id: number;
@@ -13,11 +15,12 @@ interface Task {
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule, ConfirmDialogComponent],
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css'],
 })
 export class DashboardComponent implements OnInit {
+  constructor(private dialog: MatDialog) {}
   tasks: Task[] = [];
   filteredTasks: Task[] = [];
   newTask: Task = {
@@ -82,8 +85,15 @@ export class DashboardComponent implements OnInit {
 
   // Delete a task
   deleteTask(taskId: number) {
-    this.tasks = this.tasks.filter((task) => task.id !== taskId);
-    this.saveTasks();
+    const dialogRef = this.dialog.open(ConfirmDialogComponent);
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        // If the user confirmed, proceed with deletion
+        this.tasks = this.tasks.filter((task) => task.id !== taskId);
+        this.saveTasks();
+      }
+    });
   }
 
   // Save tasks to local storage and update counts
@@ -129,5 +139,16 @@ export class DashboardComponent implements OnInit {
     this.completedCount = this.tasks.filter(
       (task) => task.status === 'Completed'
     ).length;
+  }
+
+  isDarkMode = false;
+
+  toggleDarkMode(event: any) {
+    this.isDarkMode = event.target.checked;
+    if (this.isDarkMode) {
+      document.body.classList.add('dark-mode');
+    } else {
+      document.body.classList.remove('dark-mode');
+    }
   }
 }

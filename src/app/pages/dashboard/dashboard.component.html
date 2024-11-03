@@ -1,41 +1,46 @@
-<nav class="navbar navbar-expand-lg" style="background-color: #4a90e2;">
-  <!-- Navbar content here -->
+<nav class="navbar navbar-expand-lg" [ngClass]="{'dark-navbar': isDarkMode}" style="background-color: #4a90e2;">
+  <div class="container-fluid">
+    <label>
+      <input type="checkbox" (change)="toggleDarkMode($event)" />
+      Dark Mode
+    </label>
+  </div>
 </nav>
 
-<div class="container mt-4">
-  <h3 class="text-center">Task Dashboard</h3>
+<div class="container mt-4" [ngClass]="{'dark-container': isDarkMode}">
+  <h3 class="text-center" [ngClass]="{'text-light': isDarkMode}">Task Dashboard</h3>
 
   <!-- Task Summary -->
   <div class="row text-center my-4">
-    <div class="col">
+    <div class="col" [ngClass]="{'text-light': isDarkMode}">
       <h5>Pending</h5>
       <p>{{ pendingCount }}</p>
     </div>
-    <div class="col">
+    <div class="col" [ngClass]="{'text-light': isDarkMode}">
       <h5>In Progress</h5>
       <p>{{ inProgressCount }}</p>
     </div>
-    <div class="col">
+    <div class="col" [ngClass]="{'text-light': isDarkMode}">
       <h5>Completed</h5>
       <p>{{ completedCount }}</p>
     </div>
   </div>
 
   <!-- Task Form -->
-  <div class="card mt-3">
+  <div class="card mt-3" [ngClass]="{'dark-card': isDarkMode}">
     <div class="card-body">
       <h5 class="card-title">{{ isEditMode ? 'Edit Task' : 'Add New Task' }}</h5>
       <form (ngSubmit)="saveTask()">
         <div class="form-group">
-          <label for="title">Title</label>
+          <label for="title" [ngClass]="{'text-light': isDarkMode}">Title</label>
           <input [(ngModel)]="newTask.title" name="title" class="form-control" required />
         </div>
         <div class="form-group mt-2">
-          <label for="description">Description</label>
+          <label for="description" [ngClass]="{'text-light': isDarkMode}">Description</label>
           <textarea [(ngModel)]="newTask.description" name="description" class="form-control" rows="3"></textarea>
         </div>
         <div class="form-group mt-2">
-          <label for="status">Status</label>
+          <label for="status" [ngClass]="{'text-light': isDarkMode}">Status</label>
           <select [(ngModel)]="newTask.status" name="status" class="form-control">
             <option value="Pending">Pending</option>
             <option value="In Progress">In Progress</option>
@@ -43,7 +48,7 @@
           </select>
         </div>
         <div class="form-group mt-2">
-          <label for="dueDate">Due Date</label>
+          <label for="dueDate" [ngClass]="{'text-light': isDarkMode}">Due Date</label>
           <input [(ngModel)]="newTask.dueDate" name="dueDate" class="form-control" type="date" required />
         </div>
         <button type="submit" class="btn btn-primary mt-3">
@@ -58,7 +63,7 @@
 
   <!-- Filter Tasks -->
   <div class="d-flex mt-3 justify-content-between">
-    <h5>Filter by Status</h5>
+    <h5 [ngClass]="{'text-light': isDarkMode}">Filter by Status</h5>
     <select [(ngModel)]="filterStatus" (change)="applyFilter()" class="form-select w-auto">
       <option value="All">All</option>
       <option value="Pending">Pending</option>
@@ -70,12 +75,12 @@
   <!-- Task List -->
   <div class="row mt-4">
     <div *ngFor="let task of filteredTasks" class="col-md-4">
-      <div class="card mb-3">
+      <div class="card mb-3" [ngClass]="{'dark-card': isDarkMode}">
         <div class="card-body">
-          <h5 class="card-title">{{ task.title }}</h5>
-          <p class="card-text">{{ task.description }}</p>
-          <p><strong>Status:</strong> {{ task.status }}</p>
-          <p><strong>Due Date:</strong> {{ task.dueDate | date }}</p>
+          <h5 class="card-title" [ngClass]="{'text-light': isDarkMode}">{{ task.title }}</h5>
+          <p class="card-text" [ngClass]="{'text-light': isDarkMode}">{{ task.description }}</p>
+          <p [ngClass]="{'text-light': isDarkMode}"><strong>Status:</strong> {{ task.status }}</p>
+          <p [ngClass]="{'text-light': isDarkMode}"><strong>Due Date:</strong> {{ task.dueDate | date }}</p>
           <button (click)="editTask(task)" class="btn btn-warning btn-sm">Edit</button>
           <button (click)="deleteTask(task.id)" class="btn btn-danger btn-sm ms-2">Delete</button>
         </div>
