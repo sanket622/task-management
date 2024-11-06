@@ -15,42 +15,103 @@ export class LoginSignupComponent {
   activeForm: 'login' | 'register' = 'login';
   registerObj: registerModel = new registerModel();
   loginObj: loginModel = new loginModel();
+  emailError: string | null = null;
+  passwordError: string | null = null;
+  registrationError: string | null = null;
+
   constructor(private _snackbar: MatSnackBar, private _router: Router) {}
+
   toggleForm(form: 'login' | 'register') {
     this.activeForm = form;
+    this.clearErrors();
+  }
+
+  validateEmail(email: string): boolean {
+    const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    return emailPattern.test(email);
+  }
+
+  validatePassword(password: string): boolean {
+    const passwordPattern =
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/;
+    return passwordPattern.test(password);
   }
   registerForm() {
-    const localusers = localStorage.getItem('users');
-    if (localusers != null) {
-      const users = JSON.parse(localusers);
+    this.clearErrors();
+
+    if (
+      this.registerObj.name &&
+      this.registerObj.email &&
+      this.registerObj.password
+    ) {
+      if (!this.validateEmail(this.registerObj.email)) {
+        this.emailError = 'Please enter a valid email address.';
+        return;
+      }
+      if (!this.validatePassword(this.registerObj.password)) {
+        this.passwordError =
+          'Password must be at least 6 characters, contain one uppercase letter, one lowercase letter, one number, and one special character.';
+        return;
+      }
+
+      const localusers = localStorage.getItem('users');
+      const users = localusers ? JSON.parse(localusers) : [];
+      const isEmailExist = users.some(
+        (user: registerModel) => user.email === this.registerObj.email
+      );
+
+      if (isEmailExist) {
+        this.registrationError =
+          'Email is already registered. Please use a different email.';
+        this._snackbar.open(this.registrationError, 'close');
+        return;
+      }
       users.push(this.registerObj);
       localStorage.setItem('users', JSON.stringify(users));
+
+      this._snackbar.open('User registered successfully', 'close');
     } else {
-      const users = [];
-      users.push(this.registerObj);
-      localStorage.setItem('users', JSON.stringify(users));
+      this.registrationError = 'Fill all the required fields';
+      this._snackbar.open(this.registrationError, 'close');
     }
-    this._snackbar.open('User register successfully', 'close');
   }
+
   loginForm() {
+    this.clearErrors();
+    if (!this.validateEmail(this.loginObj.email)) {
+      this.emailError = 'Please enter a valid email address.';
+      return;
+    }
+    if (!this.validatePassword(this.loginObj.password)) {
+      this.passwordError =
+        'Password must be at least 6 characters, contain one uppercase letter, one lowercase letter, one number, and one special character.';
+      return;
+    }
+
     const localusers = localStorage.getItem('users');
-    if (localusers != null) {
+    if (localusers) {
       const users = JSON.parse(localusers);
       const isUserExist = users.find(
         (user: registerModel) =>
-          user.email == this.loginObj.email &&
-          user.password == this.loginObj.password
+          user.email === this.loginObj.email &&
+          user.password === this.loginObj.password
       );
-      if (isUserExist != undefined) {
-        this._snackbar.open('Login Successfull', 'close');
+      if (isUserExist) {
+        this._snackbar.open('Login Successful', 'close');
         localStorage.setItem('loggedUser', JSON.stringify(isUserExist));
         this._router.navigateByUrl('/dashboard');
       } else {
-        this._snackbar.open('Email or Password is incorrect!');
+        this._snackbar.open('Email or Password is incorrect!', 'close');
       }
     }
   }
+
+  clearErrors() {
+    this.emailError = null;
+    this.passwordError = null;
+  }
 }
+
 export class registerModel {
   name: string;
   email: string;
@@ -61,6 +122,7 @@ export class registerModel {
     this.password = '';
   }
 }
+
 export class loginModel {
   email: string;
   password: string;

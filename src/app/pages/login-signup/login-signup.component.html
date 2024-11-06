@@ -9,6 +9,7 @@
     *ngIf="activeForm === 'register'"
     class="p-4 border rounded shadow bg-light"
     style="width: 100%; max-width: 500px"
+    (submit)="registerForm()"
   >
     <h2 class="text-center mb-4">REGISTER</h2>
     <div class="mb-3">
@@ -28,6 +29,7 @@
         [(ngModel)]="registerObj.email"
         placeholder="Email"
       />
+      <div *ngIf="emailError" class="text-danger mt-1">{{ emailError }}</div>
     </div>
     <div class="mb-3">
       <input
@@ -37,23 +39,22 @@
         [(ngModel)]="registerObj.password"
         placeholder="Password"
       />
+      <div *ngIf="passwordError" class="text-danger mt-1">
+        {{ passwordError }}
+      </div>
     </div>
-    <button
-      type="submit"
-      class="btn btn-primary w-100"
-      (click)="registerForm()"
-    >
-      Register
-    </button>
+    <button type="submit" class="btn btn-primary w-100">Register</button>
     <p (click)="toggleForm('login')" class="text-center mt-3">
       Already have an account?
       <span class="text-primary" style="cursor: pointer">LOGIN</span>
     </p>
   </form>
+
   <form
     *ngIf="activeForm === 'login'"
     class="p-4 border rounded shadow bg-light"
     style="width: 100%; max-width: 500px"
+    (submit)="loginForm()"
   >
     <h2 class="text-center mb-4">LOGIN</h2>
     <div class="mb-3">
@@ -64,6 +65,7 @@
         [(ngModel)]="loginObj.email"
         placeholder="Email"
       />
+      <div *ngIf="emailError" class="text-danger mt-1">{{ emailError }}</div>
     </div>
     <div class="mb-3">
       <input
@@ -73,10 +75,11 @@
         [(ngModel)]="loginObj.password"
         placeholder="Password"
       />
+      <div *ngIf="passwordError" class="text-danger mt-1">
+        {{ passwordError }}
+      </div>
     </div>
-    <button type="submit" class="btn btn-primary w-100" (click)="loginForm()">
-      Login
-    </button>
+    <button type="submit" class="btn btn-primary w-100">Login</button>
     <p (click)="toggleForm('register')" class="text-center mt-3">
       Don't have an account?
       <span class="text-primary" style="cursor: pointer">REGISTER</span>

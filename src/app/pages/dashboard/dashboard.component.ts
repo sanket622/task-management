@@ -66,10 +66,12 @@ export class DashboardComponent implements OnInit {
   }
 
   loadTasks() {
-    const storedTasks = localStorage.getItem('tasks');
-    this.tasks = storedTasks ? JSON.parse(storedTasks) : [];
-    this.filteredTasks = [...this.tasks];
-    this.updateStatusCounts();
+    if (typeof window !== 'undefined') {
+      const storedTasks = localStorage.getItem('tasks');
+      this.tasks = storedTasks ? JSON.parse(storedTasks) : [];
+      this.filteredTasks = [...this.tasks];
+      this.updateStatusCounts();
+    }
   }
 
   saveTask() {
@@ -106,7 +108,6 @@ export class DashboardComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        // If the user confirmed, proceed with deletion
         this.tasks = this.tasks.filter((task) => task.id !== taskId);
         this.saveTasks();
       }
@@ -114,7 +115,9 @@ export class DashboardComponent implements OnInit {
   }
 
   saveTasks() {
-    localStorage.setItem('tasks', JSON.stringify(this.tasks));
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('tasks', JSON.stringify(this.tasks));
+    }
     this.applyFilter();
     this.updateStatusCounts();
   }
